@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>五子棋 by 周炜</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        [v-cloak] {
+            width: 100%;
+            height: 600px;
+            background: url('/src/img/Loading-GIF-Image-18.gif') no-repeat center center;
+        }
+
+        [v-cloak]>div {
+            display: none;
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+        }
+
+        .piece {
+            margin-top: -12px;
+            margin-left: -12px;
+            width: 60%;
+            height: 60%;
+            z-index: 90;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .piece.white {
+            background-color: #fff;
+            -webkit-box-shadow: inset 0px 0px 0px 1px #000;
+            -moz-box-shadow: inset 0px 0px 0px 1px #000;
+            box-shadow: inset 0px 0px 0px 1px #000;
+        }
+
+        .piece.black {
+            background-color: #000;
+            -webkit-box-shadow: inset 0px 0px 0px 1px #000;
+            -moz-box-shadow: inset 0px 0px 0px 1px #000;
+            box-shadow: inset 0px 0px 0px 1px #000;
+        }
+
+        .bottom {
+            border-bottom: 1px solid #000;
+        }
+
+        .left {
+            border-left: 1px solid #000;
+        }
+
+        .top {
+            border-top: 1px solid #000;
+        }
+
+        .right {
+            border-right: 1px solid #000;
+        }
+
+        #board_div {
+            background: url(../src/img/preview.jpg);
+            padding-bottom: 40px;
+        }
+
+        table {
+            margin: 0px auto 0px auto;
+        }
+
+        .user_ul li{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div id="board_div">
+            <table cellpadding="0" cellspacing="0">
+                <tr v-for="(itemY,y) in Board">
+                    <td v-for="(itemX,x) in itemY" :class="getBoardCellClass(y,x)" style="position: relative;">
+                        <div class="cell"></div>
+                        <div :class="getPieceClass(y,x)" @click="clickPiece(y,x)"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div :hidden="DeskId > -1" style="margin:0 auto;width:260px;">
+            <span>当前在线用户，选择用户进行对战：</span>
+            <ul class="user_ul">
+                <li v-for="(item,i) in Clients" @click="applyConnect(item.id)">{{item.name}}</li>
+            </ul>
+        </div>
+        <div :hidden="IsOver" style="margin:0 auto;width:380px;">
+            <span>您为 {{this.ServerRole | getRoleName}} ，当前 {{this.CurrentPieceRole | getRoleName}} 落子，对战共计用时： {{Timing.Minute | fillZero}} : {{Timing.Second | fillZero}}</span>
+            <!-- <input type="button" value="悔棋" @click="backBoard" :hidden="IsOver" /> -->
+        </div>
+        <div :hidden="DeskId === -1 || !IsOver" style="margin:0 auto;width:150px;">
+            <input type="button" value="重新开始" @click="reloadBegin" />
+        </div>
+    </div>
+
+
+    <script src="/src/lib/require/require.js" lang="utf-8"></script>
+    <script src="/src/lib/require/config.js" lang="utf-8"></script>
+    <script src="/src/js/five.js" lang="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?4146a41d5ef0b116a00b346e854c43b0";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</body>
+
+</html>
