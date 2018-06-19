@@ -179,7 +179,7 @@ socket.on('serverClickPiece', function (data) {
 ```
 
 
-[Demo](http://animebz.com/game/five.html)
+[Demo](http://blog.animebz.com/game/five.html)
 
 > 主要是用来学习socket.io，所以很多细节方面没有处理，bug多了点
 
